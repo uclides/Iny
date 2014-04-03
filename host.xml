@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<configuracion>
+<server>
+		<host></host>
+		<databaseName></databaseName>
+		<user></user>
+		<password></password>
+</server>
+<equipo>
+		<modelo></modelo>
+		<orden></orden>
+		<so></so>
+		<serialpadre></serialpadre>
+</equipo>
+</configuracion>
