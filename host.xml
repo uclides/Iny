@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <configuracion>
 <server>
-		<host></host>
-		<databaseName></databaseName>
-		<user></user>
-		<password></password>
+		<host>10.52.6.5</host>
+		<databaseName>factory</databaseName>
+		<user>sa</user>
+		<password>oa3.0</password>
 </server>
 <equipo>
 		<modelo></modelo>

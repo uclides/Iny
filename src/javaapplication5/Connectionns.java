@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class Connectionns {
    boolean res;    
+   String error;
     public boolean connectDB(JFrame jframe,String host,String db,String user,String pass){
 try{
 Statement stmt = null;ResultSet rs = null;
@@ -35,8 +36,8 @@ JOptionPane.showMessageDialog(jframe,"Success", null, -1);
 catch(SQLException e){
      //System.out.println(""+e.getLocalizedMessage().toString());
     res=true;
-    
-     JOptionPane.showMessageDialog(jframe,e.getLocalizedMessage().toString(), null, 0);
+    error= e.getLocalizedMessage();
+     //JOptionPane.showMessageDialog(jframe,e.getLocalizedMessage().toString(), null, 0);
      //System.exit(0);
      
 }
@@ -47,5 +48,10 @@ catch (ClassNotFoundException cE) {
         return res;
         
 } 
+    public String getError(){
+
+       return error;
+    }
+
 
 }

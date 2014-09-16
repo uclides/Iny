@@ -5,15 +5,10 @@
  */
 package javaapplication5;
 
-import java.awt.Component;
-import java.awt.Window;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javaapplication5.ServerConf.valuehost;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -24,6 +19,7 @@ import org.xml.sax.SAXException;
  */
 public final class NewJFrame extends javax.swing.JFrame implements Runnable{
 Connectionns conexion =new Connectionns();
+ServerConf  Frameconf=new ServerConf();
 Files readFile=new Files();
 String[] items=new String[1];
 String propertyfile,val1,val2,val3,val4;
@@ -31,6 +27,7 @@ String modelo,orden,so;
 String[] result;
 Thread thread =new Thread();
 boolean bool;
+
    /**
      * Creates new form NewJFrame
      * @throws javax.xml.parsers.ParserConfigurationException
@@ -39,20 +36,49 @@ boolean bool;
      * @throws java.lang.InterruptedException
      */
     public NewJFrame() throws ParserConfigurationException, SAXException, IOException, InterruptedException {
+
         initComponents();
         //readFile.Readxml(this,items);
 
-         if( readFile.Readxml(this,items,"server")!=""){
-         
-               Split(readFile.Readxml(this,items,"server"));  
+//         if( readFile.Readxml(this,items,"server")!=""){
+//         
+//               Split(readFile.Readxml(this,items,"server"));  
+//        
+//        if(!conexion.connectDB(this,val1,val2,val3,val4)){
+//                   try {
+//                       System.out.println("connected");
+//                       
+//                       Split(readFile.Readxml(this,items,"equipo"));
+//                       
+//                 // readFile.execCmd(jTextArea1,"C:\\Users\\desarrollo06\\Desktop\\validate.bat");
+//                  
+//                   } catch (Exception ex) {
+//                       Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                   }
+//    
+//        
+//        }
+//        else{ System.out.println("invalid connect");
+//        System.exit(0);
+//        }        
+//         }
+//         else{
+//          JOptionPane.showMessageDialog(this,"parametros invalidos en host.xml", null, 0);
+//         System.exit(0);
+//         }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+               
         
-        if(!conexion.connectDB(this,val1,val2,val3,val4)){
+        if(!conexion.connectDB(this,Frameconf.preferences.get(Frameconf.prefnamehost, valuehost),
+                Frameconf.preferences.get(Frameconf.prefnameDB, Frameconf.valuedb),
+                Frameconf.preferences.get(Frameconf.prefnameuser, Frameconf.valueuser),
+                Frameconf.preferences.get(Frameconf.prefnamepass, Frameconf.valuepass))){
                    try {
                        System.out.println("connected");
                        
                        Split(readFile.Readxml(this,items,"equipo"));
                        
-                  readFile.execCmd(jTextArea1,"C:\\Users\\inv.Desarrollo2\\Desktop\\validate.bat");
+                 // readFile.execCmd(jTextArea1,"C:\\Users\\desarrollo06\\Desktop\\validate.bat");
                   
                    } catch (Exception ex) {
                        Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,14 +86,11 @@ boolean bool;
     
         
         }
-        else{ System.out.println("invalid connect");
-        System.exit(0);}        
-         }
          else{
-          JOptionPane.showMessageDialog(this,"parametros invalidos en host.xml", null, 0);
-         System.exit(0);
-         }
-       
+          JOptionPane.showMessageDialog(this,"parametros invalidos", null, 0);
+        jTextArea1.setText(conexion.getError());
+        }
+               //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Split(readFile.Readxml(this,items,"server"));  
 //        conexion.connectDB(this,val1,val2,val3,val4); 
        //ystem.out.print(readFile.Readxml(this,items));ammm 
@@ -87,6 +110,10 @@ boolean bool;
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -101,29 +128,69 @@ boolean bool;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
+        jTextArea1.setFocusable(false);
         jScrollPane1.setViewportView(jTextArea1);
+
+        jMenu1.setText("configuración");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("servidor");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("orden");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(203, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(217, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ServerConf frameconf = new ServerConf();
+        frameconf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+      OrdenConf ordenConf = new OrdenConf();
+        ordenConf.setVisible(true);   // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,6 +258,10 @@ int i=0;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
