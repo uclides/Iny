@@ -31,7 +31,7 @@ System.out.println(con.getMetaData().getURL());
 System.out.println("Success");
 
 
-JOptionPane.showMessageDialog(jframe,"Success", null, -1);
+//JOptionPane.showMessageDialog(jframe,"Success", null, -1);
 }
 catch(SQLException e){
      //System.out.println(""+e.getLocalizedMessage().toString());

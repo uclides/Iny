@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
  */
 public final class NewJFrame extends javax.swing.JFrame implements Runnable{
 Connectionns conexion =new Connectionns();
+ LoginDialog loginDalog = new LoginDialog();
 ServerConf  Frameconf=new ServerConf();
 Files readFile=new Files();
 String[] items=new String[1];
@@ -27,6 +28,7 @@ String modelo,orden,so;
 String[] result;
 Thread thread =new Thread();
 boolean bool;
+int login;
 
    /**
      * Creates new form NewJFrame
@@ -112,6 +114,7 @@ boolean bool;
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
@@ -141,6 +144,14 @@ boolean bool;
                 jMenu1ActionPerformed(evt);
             }
         });
+
+        jMenuItem3.setText("login");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
 
         jMenuItem1.setText("servidor");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +202,11 @@ boolean bool;
       OrdenConf ordenConf = new OrdenConf();
         ordenConf.setVisible(true);   // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+     // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +278,7 @@ int i=0;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables

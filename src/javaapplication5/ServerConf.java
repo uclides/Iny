@@ -8,6 +8,9 @@ package javaapplication5;
 import java.io.File;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -37,6 +40,23 @@ String pathfolder="ninguno";
         jTextField3.setText(preferences.get(prefnameuser, valueuser));
         jPasswordField1.setText(preferences.get(prefnamepass, valuepass));
                 jLabel6.setText(preferences.get(prefnamefolder, valueDir));
+//                  jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+//
+//      @Override
+//      public void insertUpdate(DocumentEvent e) {
+//         detect(); //To change body of generated methods, choose Tools | Templates.
+//      }
+//
+//      @Override
+//      public void removeUpdate(DocumentEvent e) {
+//        detect();//To change body of generated methods, choose Tools | Templates.
+//      }
+//
+//      @Override
+//      public void changedUpdate(DocumentEvent e) {
+//        detect(); //To change body of generated methods, choose Tools | Templates.
+//      }
+//  });
     }
 
     /**
@@ -60,7 +80,6 @@ String pathfolder="ninguno";
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -119,13 +138,6 @@ String pathfolder="ninguno";
         jLabel6.setMaximumSize(new java.awt.Dimension(250, 0));
         jLabel6.setMinimumSize(new java.awt.Dimension(270, 0));
 
-        jButton4.setText("probar conexion");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,8 +169,6 @@ String pathfolder="ninguno";
                         .addComponent(jButton3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -192,8 +202,7 @@ String pathfolder="ninguno";
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton4))
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -210,12 +219,13 @@ String pathfolder="ninguno";
     }//GEN-LAST:event_exitForm
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-    
-      // TODO add your handling code here:
-     
-       
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    public void detect(){
+    if(!"".equals(jTextField1.getText())){
+    jButton2.setEnabled(true);
+    }
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 int returnVal = fc.showOpenDialog(ServerConf.this);
  file = fc.getSelectedFile();
@@ -230,18 +240,37 @@ int returnVal = fc.showOpenDialog(ServerConf.this);
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 //Frameconf.setValueDir(file.getAbsolutePath()); 
 //System.out.println(getValueDir());
+       Object[] options = {"Si",
+                    "No"};
+        if(!connectionns.connectDB(null, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jPasswordField1.getText())){
 preferences.put(prefnamefolder, jLabel6.getText());
 preferences.put(prefnamehost, jTextField1.getText());
 preferences.put(prefnameDB, jTextField2.getText());
 preferences.put(prefnameuser, jTextField3.getText());
 preferences.put(prefnamepass, jPasswordField1.getText());
+JOptionPane.showMessageDialog(ServerConf.this,"conexión establecida correctamente, datos guardados", null, -1);
 this.dispose();
+}
+else{
+int selected = JOptionPane.showOptionDialog(this, "conexion fallo! ¿desea guardar los cambios?","aviso",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+if(1==selected){
+
+}else{
+    preferences.put(prefnamefolder, jLabel6.getText());
+preferences.put(prefnamehost, jTextField1.getText());
+preferences.put(prefnameDB, jTextField2.getText());
+preferences.put(prefnameuser, jTextField3.getText());
+preferences.put(prefnamepass, jPasswordField1.getText());
+    ServerConf.this.dispose();
+    connectionns.getError();
+}
+}
+        
+        
+
+
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-connectionns.connectDB(null, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jPasswordField1.getText());        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 dispose();        // TODO add your handling code here:
@@ -287,11 +316,11 @@ dispose();        // TODO add your handling code here:
     public static String getValuePass(){
     return valuepass;
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
